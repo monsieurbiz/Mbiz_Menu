@@ -2,18 +2,22 @@
 
 `Mbiz_Menu` is a Magento 1 module which provides an optimized menu as a simple block.
 
+## Usage
+
 The block `mbiz_menu/page_html_topmenu` gives 2 methods:
 
-* `getCategoriesTree()` which returns main categories with children.
+1. `getCategoriesTree()` which returns main categories with children.
     Children are available using the method `$cat->get_children()`.
-* `getCategories` which returns all the categories available in the menu.
+2. `getCategories` which returns all the categories available in the menu.
+
+### Example
 
 No template is provided. But here is an really simple example:
 
-```
+```php
 <?php
 /* @var $this Mbiz_Menu_Block_Page_Html_Topmenu */
-$_tree = $this->getCategoriesTree();
+$_tree   = $this->getCategoriesTree();
 $_output = $this->helper('catalog/output');
 ?>
 <ul>
