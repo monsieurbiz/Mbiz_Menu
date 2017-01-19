@@ -33,6 +33,16 @@ class Mbiz_Menu_Block_Page_Html_Topmenu extends Mage_Core_Block_Template
     }
 
     /**
+     * @inheritdoc
+     */
+    public function getCacheKeyInfo()
+    {
+        return parent::getCacheKeyInfo() + [
+            'category_id' => $this->getCurrentCategoryId(),
+        ];
+    }
+
+    /**
      * Retrieve current category id
      *
      * @return int 0 is returned of no category found
