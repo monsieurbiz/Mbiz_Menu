@@ -33,6 +33,19 @@ class Mbiz_Menu_Block_Page_Html_Topmenu extends Mage_Core_Block_Template
     }
 
     /**
+     * Retrieve current category id
+     *
+     * @return int 0 is returned of no category found
+     */
+    public function getCurrentCategoryId()
+    {
+        if ($currentCategory = Mage::registry('current_category')) {
+            return (int) $currentCategory->getId();
+        }
+        return 0;
+    }
+
+    /**
      * Give all categories of the current store
      * @return array Array of all categories
      */
