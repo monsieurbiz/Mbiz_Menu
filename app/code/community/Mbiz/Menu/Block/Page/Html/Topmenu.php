@@ -73,6 +73,7 @@ class Mbiz_Menu_Block_Page_Html_Topmenu extends Mage_Core_Block_Template
                 ->addFieldToFilter('path', [
                     'like' => $pathLike,
                 ])
+                ->addIsActiveFilter()
                 ->addAttributeToFilter('include_in_menu', 1);
 
             // Sort
