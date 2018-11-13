@@ -98,6 +98,8 @@ class Mbiz_Menu_Block_Page_Html_Topmenu extends Mage_Core_Block_Template
         $allCategories = $this->getCategories();
         $topCategories = [];
 
+        $currentCategory = null;
+
         // Building tree from categories collection
         foreach ($allCategories as $idCat => $category) {
 
@@ -114,8 +116,28 @@ class Mbiz_Menu_Block_Page_Html_Topmenu extends Mage_Core_Block_Template
                 $parent           = $allCategories[$category->getParentId()];
                 $children         = $parent->getData('_children') ?: [];
                 $children[$idCat] = $category;
+                $category->setData('_parent', $parent);
                 $parent->setData('_children', $children);
             }
+
+            if ((int) $idCat === $this->getCurrentCategoryId()) {
+                $currentCategory = $category;
+            }
+        }
+
+        // Set current path
+        if (null !== $currentCategory) {
+            $setCategoryAsCurrent = function (Mage_Catalog_Model_Category $category, $isParent = false) use (&$setCategoryAsCurrent) {
+                if ($isParent) {
+                    $category->setContainsCurrentCategory(true);
+                } else {
+                    $category->setIsCurrentCategory(true);
+                }
+                if ($parentCategory = $category->getData('_parent')) {
+                    $setCategoryAsCurrent($parentCategory, true);
+                }
+            };
+            $setCategoryAsCurrent($currentCategory);
         }
 
         return $topCategories;
