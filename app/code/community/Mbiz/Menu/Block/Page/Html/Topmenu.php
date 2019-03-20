@@ -74,7 +74,8 @@ class Mbiz_Menu_Block_Page_Html_Topmenu extends Mage_Core_Block_Template
                     'like' => $pathLike,
                 ])
                 ->addIsActiveFilter()
-                ->addAttributeToFilter('include_in_menu', 1);
+                ->addAttributeToFilter('include_in_menu', 1)
+                ->joinUrlRewrite();
 
             // Sort
             $collection->getSelect()->reset(Zend_Db_Select::ORDER);
