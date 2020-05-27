@@ -11,6 +11,10 @@
 
 /**
  * Page_Html_Topmenu Block
+ *
+ * @method bool getCacheByFirstCategory()
+ * @method Mbiz_Menu_Block_Page_Html_Topmenu setCacheByFirstCategory(bool $value)
+ *
  * @package Mbiz_Menu
  */
 class Mbiz_Menu_Block_Page_Html_Topmenu extends Mage_Core_Block_Template
@@ -38,8 +42,8 @@ class Mbiz_Menu_Block_Page_Html_Topmenu extends Mage_Core_Block_Template
     public function getCacheKeyInfo()
     {
         return parent::getCacheKeyInfo() + [
-            'category_id' => $this->getCurrentCategoryId(),
-        ];
+                'category_id' => $this->getCacheByFirstCategory() ? $this->getFirstCategoryId() : $this->getCurrentCategoryId(),
+            ];
     }
 
     /**
@@ -51,6 +55,19 @@ class Mbiz_Menu_Block_Page_Html_Topmenu extends Mage_Core_Block_Template
     {
         if ($currentCategory = Mage::registry('current_category')) {
             return (int) $currentCategory->getId();
+        }
+        return 0;
+    }
+
+    /**
+     * Retrieve first level category id
+     *
+     * @return int 0 is returned of no category found
+     */
+    public function getFirstCategoryId()
+    {
+        if ($currentCategory = Mage::registry('current_category')) {
+            return (int) $currentCategory->getPathIds()[2];
         }
         return 0;
     }
